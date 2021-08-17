@@ -1,7 +1,10 @@
 <template>
   <div class="leftlist">
     <ul v-for="(item, index) in leftList" :key="item.miniWallkey" :in="index">
-      <li @click="liClick(index)" :class="{ active: currentIndex == index }">
+      <li
+        @click="liClick(index, item)"
+        :class="{ active: currentIndex == index }"
+      >
         {{ item.title }}
       </li>
     </ul>
@@ -22,14 +25,23 @@ export default {
     };
   },
   methods: {
-    liClick(index) {
+    liClick(index, item) {
+      const obj = {
+        maitKey: item.maitKey,
+        index,
+      };
       this.currentIndex = index;
+      this.$emit("liClick", obj);
+      // console.log(item.maitKey);
     },
   },
 };
 </script>
 
 <style scoped>
+/* .leftList {
+
+} */
 ul {
   text-align: center;
 }
@@ -38,7 +50,7 @@ li {
   display: block;
   width: 80px;
   /* border: 1px solid #000; */
-  padding: 8px 8px;
+  padding: 7.7px 8px;
   background-color: #eee;
 }
 .active {
